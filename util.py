@@ -29,7 +29,7 @@ def save_checkpoint(args, state, is_best, filename):
 def resume_train(args, model, optimizer=None, strict=False):
     """Load model, optimizer, and other training parameters"""
     logging.debug(f"Loading checkpoint: {args.resume}")
-    checkpoint = torch.load(args.resume) # , map_location='cpu'
+    checkpoint = torch.load(args.resume, map_location=('cpu' if args.device=='cpu' else None)) # , map_location='cpu'
     if "epoch_num" in checkpoint:
         start_epoch_num = checkpoint["epoch_num"]
     # del(checkpoint["model_state_dict"]['module.reranker.decoder_p
