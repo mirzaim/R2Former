@@ -3,7 +3,7 @@ import torch
 import argparse
 
 
-def parse_arguments():
+def parse_arguments(args=None):
     parser = argparse.ArgumentParser(description="Benchmarking Visual Geolocalization",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # Training parameters
@@ -120,7 +120,7 @@ def parse_arguments():
                         help="Path with images to be used to compute PCA (ie: pitts30k/images/train")
     parser.add_argument("--save_dir", type=str, default="default",
                         help="Folder name of the current run (saved in ./logs/)")
-    args = parser.parse_args()
+    args = parser.parse_args(args=args)
     
     if args.datasets_folder == None:
         try:
