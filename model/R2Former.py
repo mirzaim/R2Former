@@ -98,8 +98,9 @@ class R2Former(nn.Module):
 
     def forward(self, x_global, x_rerank=None, y_global=None, y_rerank=None):
         if x_rerank is None and y_global is None and y_rerank is None:
-            x_rerank = y_rerank = torch.rand(1,500,131).cuda()
-            y_global = x_global = torch.rand(1,256).cuda()
+            device = next(self.parameters()).device
+            x_rerank = y_rerank = torch.rand(1,500,131).to(device)
+            y_global = x_global = torch.rand(1,256).to(device)
         # print(x_global.shape, x_rerank.shape)
         B = x_global.shape[0]
         N = x_rerank.shape[1]
@@ -172,7 +173,7 @@ def get_1d_sincos_pos_embed_from_grid(embed_dim, pos):
     out: (M, D)
     """
     assert embed_dim % 2 == 0
-    omega = torch.arange(embed_dim // 2, dtype=torch.float32).cuda()
+    omega = torch.arange(embed_dim // 2, dtype=torch.float32).to(pos.device)
     omega /= embed_dim / 2.
     omega = 1. / 10000**omega  # (D/2,)
 
